@@ -1,0 +1,30 @@
+<section>
+    <form class="editform" *ngIf="!busy" (ngSubmit)="addPost(postForm.value)" [formGroup]="postForm">
+
+        <h2>Create a new post.</h2>
+        <p>Fill the form to add a new post to the database.</p>
+
+        <div>
+            <label class="form-label" for="title">Title</label>
+            <input type="text" class="form-control" formControlName="title" required>
+            <div *ngIf="f.title.touched && f.title.invalid" class="alert alert-danger">
+                <div *ngIf="f.title.errors && f.title.errors.required">Title is required.</div>
+                <div *ngIf="f.title.errors && f.title.errors.minlength">Title should be Minimum 3 character.</div>
+                <div *ngIf="f.title.errors && f.title.errors.maxlength">Name should be less then 30 character.</div>
+            </div>
+            <label class="form-label" for="content">Content</label>
+            <textarea class="form-control" formControlName="content"></textarea>
+            <label for="cover" class="form-label">Choose a Cover</label>
+            <input type="file" name="cover" id="cover" formControlName="cover" (change)="handleInput($event)">
+        </div>
+        <input type="submit" class="btn btn-success" [disabled]="!postForm.valid" value="Submit">
+    </form>
+
+    <div *ngIf="busy" class="processing">
+        <p>Processing request, please stand by, you will be redirected soon...</p>
+        <div class="loader">Loading...</div>
+    </div>
+
+
+
+</section>

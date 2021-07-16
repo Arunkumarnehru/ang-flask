@@ -1,0 +1,31 @@
+<section>
+    <form class="editform" *ngIf="!busy" (ngSubmit)="Login(loginForm.value)" [formGroup]="loginForm">
+
+        <h2>Create a new post.</h2>
+        <p>Fill the form to add a new post to the database.</p>
+
+        <div>
+            <label class="form-label" for="username">Username</label>
+            <input type="text" class="form-control" formControlName="username" required>
+            <!-- <div *ngIf="userfields.username.touched && userfields.username.invalid" class="alert alert-danger">
+                <div *ngIf="userfields.username.errors && userfields.username.errors.required">username is required.</div>
+                <div *ngIf="userfields.username.errors && userfields.username.errors.minlength">username should be Minimum 3 character.</div>
+                <div *ngIf="userfields.username.errors && userfields.username.errors.maxlength">username should be less then 30 character.</div>
+            </div> -->
+            <label class="form-label" for="password">Password</label>
+            <input type="password" class="form-control" formControlName="password" required>
+        </div>
+        <input type="submit" class="btn btn-success" [disabled]="!loginForm.valid" value="Submit">
+        
+    </form>
+    <div *ngIf="usererr" class="alert alert-danger"> 
+        <p>That username already exists, Please choose a different one.</p> 
+    </div>
+    <div *ngIf="busy" class="processing">
+        <p>Processing request, please stand by, you will be redirected soon...</p>
+        <div class="loader">Loading...</div>
+    </div>
+
+
+
+</section>

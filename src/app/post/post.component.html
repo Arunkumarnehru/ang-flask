@@ -1,0 +1,50 @@
+<section>
+    <div class="single" *ngIf="post">
+        <h2>Title: {{post[1]}}</h2>
+        
+        <img class="postsrc" src="{{post[3]}}" />
+        <div>Content: {{post[2]}}</div>
+        <br/>
+        <br/>
+        <button class="cancel btn btn-secondary" (click)="enableEdit()" *ngIf="editMode; else cancel ">Cancel Edit</button>
+        
+        <ng-template #cancel>
+            <button class="edit btn btn-primary" (click)="enableEdit()" >Edit Post</button>
+        </ng-template>
+
+        <div *ngIf="editMode">
+            <p>Edit the current post bellow.</p>
+
+            <form class="editform" *ngIf="!busy" (ngSubmit)="editPost(editForm.value)" [formGroup]="editForm">
+     
+                <h2>Edit post.</h2>
+                <p>Edit the form to update the post in the database.</p>  
+                
+                <div>
+                 <label class="form-label" for="title">Title</label>
+                 <input type="text" class="form-control" formControlName="title">
+                 <label class="form-label" for="content">Content</label>
+                 <textarea class="form-control" formControlName="content"></textarea>
+               </div>
+
+               <input type="hidden" value="{{post[0]}}" formControlName="id" />
+               <input type="hidden" value="{{post[3]}}" formControlName="oldcover" />
+               <input type="hidden" value="{{post[4]}}" formControlName="covername" />
+
+               <div class="formcontrol">
+                   <label for="cover" class="form-label">Change Cover</label>
+                   <input type="file" name="cover" id="cover" (change)="handleInput($event)">
+               </div>
+                 <input type="submit" class="btn btn-success" [disabled]="!editForm.valid" value="Submit">
+               </form>
+             
+
+               <div *ngIf="busy" class="processing">
+                  <p>Processing request, please stand by, you will be redirected soon...</p>
+                  <div class="loader">Loading...</div>
+                </div>
+        </div>
+    </div>
+
+    <button class="delete btn btn-danger" (click)="deletePost(post[0])">Delete Post</button>
+</section>
